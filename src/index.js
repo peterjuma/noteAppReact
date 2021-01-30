@@ -65,20 +65,20 @@ ReactDOM.render(
       Stroopwafel: <FontAwesomeIcon icon="stroopwafel" /><br></br>
       Apple: <FontAwesomeIcon icon="apple-alt" /><br></br>
       Cookie: <FontAwesomeIcon icon="cookie" /><br></br>
-
-      <ul class="fa-ul">
+ 
+      <ul class="fa-ul">List of Icons: 
         <li><i class="fa-li fa fa-check-square"></i>List icons</li>
         <li><i class="fa-li fa fa-spinner fa-spin"></i>List icons</li>
         <li><i class="fa-li fa fa-square"></i>List icons</li>
       </ul>
 
-      <i class="fa fa-spinner fa-spin"></i>
-      <i class="fa fa-circle-o-notch fa-spin"></i>
-      <i class="fa fa-refresh fa-spin"></i>
-      <i class="fa fa-cog fa-spin"></i>
-      <i class="fa fa-spinner fa-pulse"></i>
+      <i class="fa fa-spinner fa-spin"></i><br></br>
+      <i class="fa fa-circle-o-notch fa-spin"></i><br></br>
+      <i class="fa fa-refresh fa-spin"></i><br></br>
+      <i class="fa fa-cog fa-spin"></i><br></br>
+      <i class="fa fa-spinner fa-pulse"></i><br></br>
 
-      <div><i className="fa fa-spinner fa-spin">no spinner but why</i></div><br></br>
+      <div><i className="fas fa-spinner fa-spin">no spinner but why</i></div><br></br>
     </h1>
   </StrictMode>,
   rootElement
