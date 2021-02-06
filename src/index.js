@@ -7,21 +7,6 @@ import * as marked from "marked";
 import MarkdownIt from "markdown-it";
 import TurndownService from "turndown";
 import * as turndownPluginGfm from "turndown-plugin-gfm";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as FontAwesome from '@fortawesome/fontawesome-free-solid';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faBeer, faCoffee, faWineGlassAlt, faStroopwafel, faAppleAlt, faCookie } from '@fortawesome/free-solid-svg-icons';
-library.add(
-  fab,
-  faBeer,
-  faCoffee,
-  faWineGlassAlt,
-  faStroopwafel,
-  faAppleAlt,
-  faCookie
-)
-
 import App from "./App";
 import "./styles.css";
 
@@ -51,7 +36,9 @@ var markdown = turndownService.turndown(html)
 const markdown2 = turndownService.turndown(marked(html));
 var turnhtml = md.render(mark);
 
-console.log(markdown);
-console.log(markdown2);
-console.log(turnhtml);
-console.log(FontAwesome.faPhone);
+// console.log(markdown);
+// console.log(markdown2);
+// console.log(turnhtml);
+// console.log(FontAwesome.faPhone);
+
+
