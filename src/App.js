@@ -14,8 +14,8 @@ const lorem = new LoremIpsum({
       min: 3
     },
     wordsPerSentence: {
-      max: 10,
-      min: 7
+      max: 8,
+      min: 4
     }
   });
 
@@ -40,17 +40,23 @@ for (var i = 0; i < 15; i++) {
 // End of Lorem Ipsum Note
 
 export default function App() {
+
+  const noteListItems = notesData.map((note) => (
+    <NoteList key={note.noteid} note={note} />
+  ));
+
   return (
     <div className="container">
         <div className="left">   
             <NavbarLeft />
-            <NoteList notesData={notesData}/>
+            <div className="note-list">
+                {noteListItems}
+            </div>
         </div>
         <div className="right">
             <NavbarRight />
             <NoteMain notesData={notesData}/>
         </div>
-        
     </div>
   );
 }

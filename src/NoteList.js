@@ -1,14 +1,11 @@
-import react, { useState } from "react";
-import NoteListItem from "./NoteListItem"
+import react from "react";
 
-function NoteList(props){
-    const noteListItems = props.notesData.map((note) => (
-        <NoteListItem key={note.noteid} note={note} />
-      ));
-       return (
-          <div className="note-list">
-              {noteListItems}
-          </div>
-      )
+function NoteList(props) {
+    return (
+        <div className="note-list-item" id={props.note.noteid}>
+            <span>{props.note.title }</span>  
+        </div>
+    )
 }
+
 export default NoteList
