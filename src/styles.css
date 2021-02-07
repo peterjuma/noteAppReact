@@ -118,6 +118,7 @@ font-size: medium;
 position: inherit;
 overflow-x: hidden;
 overflow-y: scroll;
+padding-bottom: 20px;
 }
 
 /* Note List item */
@@ -129,7 +130,19 @@ overflow-y: scroll;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin: 4px;
+  margin: 0 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.note-list-item-hover {
+  background: #f6f5f5;
+}
+
+/* Highlight Clicked note item */
+.note-list-item-clicked {
+  background: #ced9f2;
+  transition: 0.3s;
 }
 
 /* Cancel Icon inside search input */
@@ -139,11 +152,18 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* Common button formatter*/
 .btn {
-outline: none;
-background-color: #fff;
-cursor: pointer;
-margin: 2px;
-color: #777;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+  margin: 2px;
+  color: #777;
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: #fff;
 }
 
 .main {
@@ -171,3 +191,48 @@ pre, code {
   word-wrap: break-word; 
   width:100%; overflow-x:auto;
  }
+
+ /* Boostrap CSS */
+
+h1{
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-2 {
+  font-size: 5.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-1 {
+  font-size: 6rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Highlight Selected text*/
+
+/* ::selection {
+  color: red;
+  background: yellow;
+} */
