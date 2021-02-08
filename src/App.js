@@ -127,7 +127,8 @@ class App extends Component {
           </div>
           <div className="right">
               <NavbarRight />
-              <NoteMain notesData={this.state}/>
+              {/* <NoteMain notesData={this.state}/> */}
+              <NoteEditorToolbar />
           </div>
       </div>
     );
