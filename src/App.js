@@ -6,6 +6,7 @@ import NavbarRight from "./NavbarRight"
 import NoteList from "./NoteList"
 import NoteMain from "./NoteMain"
 import readmePath from './README.md'
+import NoteEditorToolbar from "./NoteEditorToolbar"
 
 // Generate random notes data 
 import { LoremIpsum } from "lorem-ipsum";
@@ -47,7 +48,6 @@ if (notesData.length > 0) {
 }
 
 class App extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -57,7 +57,7 @@ class App extends Component {
     };
     this.handleNoteListItemClick = this.handleNoteListItemClick.bind(this)
     this.handleClickHomeBtn = this.handleClickHomeBtn.bind(this)
-    this.handleNoteListItemMouseHover = this.handleNoteListItemMouseHover.bind(this)
+    this.handleNoteListItemMouseOver = this.handleNoteListItemMouseOver.bind(this)
   }
   componentDidMount() {
     if(notesData.length == 0){      
@@ -81,11 +81,14 @@ class App extends Component {
   }
 
   // Handle Mouse Hover on List item
-
-  handleNoteListItemMouseHover = (e, note) => {
+  handleNoteListItemMouseOver = (e, note) => {
     var noteList = document.querySelectorAll(".note-list-item-hover");
     noteList.length > 0 ? noteList.forEach(b => b.classList.remove('note-list-item-hover')) : ""
     document.getElementById(note.noteid).classList.add('note-list-item-hover');
+  }
+  handleNoteListItemMouseOut = () => {
+    var noteList = document.querySelectorAll(".note-list-item-hover");
+    noteList.length > 0 ? noteList.forEach(b => b.classList.remove('note-list-item-hover')) : ""
   }
 
   // Handle click home button 
@@ -111,7 +114,7 @@ class App extends Component {
 
   render() {
     const noteListItems = notesData.map((note) => (
-      <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} handleMouseOver={this.handleNoteListItemMouseHover}/>
+      <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} handleMouseOver={this.handleNoteListItemMouseOver} handleMouseOut={this.handleNoteListItemMouseOut}/>
     ));
 
     return (
