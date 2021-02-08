@@ -25,7 +25,7 @@ function NoteMain(props) {
     return (
         <div className="main">
             <div className="page-header">
-                <h1 id="notetitle" dangerouslySetInnerHTML={{ __html: md.render(notesData.notetitle) }}></h1>
+                <h1 dangerouslySetInnerHTML={{ __html: md.render(notesData.notetitle) }}></h1>
             </div>
             <div className="notebody" id="notebody" dangerouslySetInnerHTML={{ __html: md.render(notesData.notebody)}}>
             </div>

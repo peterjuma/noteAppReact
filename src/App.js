@@ -6,7 +6,7 @@ import NavbarRight from "./NavbarRight"
 import NoteList from "./NoteList"
 import NoteMain from "./NoteMain"
 import readmePath from './README.md'
-import NoteEditorToolbar from "./NoteEditorToolbar"
+import NoteEditor from "./NoteEditor"
 
 // Generate random notes data 
 import { LoremIpsum } from "lorem-ipsum";
@@ -128,7 +128,7 @@ class App extends Component {
           <div className="right">
               <NavbarRight />
               {/* <NoteMain notesData={this.state}/> */}
-              <NoteEditorToolbar />
+              <NoteEditor />
           </div>
       </div>
     );
