@@ -71,6 +71,9 @@ border-bottom: 1px solid #dcdcde;
 width: 100%;
 }
 
+.hidden {
+  display:none
+}
 
 /* Navbar icons - Left  */
 .nav-left-icon{
@@ -236,7 +239,8 @@ h3 {
 
 #notetitle {
   height: 50px;
-  padding: 5px;
+  padding: 20px;
+  padding-left: 40px;
   width: 100%;
   border: none;
   border-bottom: 1px solid #dcdcde;
@@ -262,7 +266,7 @@ textarea {
   border: none;
   box-shadow: none;
   border-top: 1px solid #dcdcde;
-  font-family: "Courier New", Courier, monospace;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "HelveticaNeue-Light", "Ubuntu", "Droid Sans", sans-serif;
   height: inherit;
 }
 
