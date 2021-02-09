@@ -59,7 +59,7 @@ class App extends Component {
         this.handleNoteListItemClick = this.handleNoteListItemClick.bind(this)
         this.handleClickHomeBtn = this.handleClickHomeBtn.bind(this)
         this.handleNoteListItemMouseOver = this.handleNoteListItemMouseOver.bind(this)
-        this.handleClickEditNote = this.handleClickEditNote.bind(this)
+        this.handleEditNote = this.handleEditNote.bind(this)
       }
       componentDidMount() {
         if(notesData.length == 0){      
@@ -116,14 +116,12 @@ class App extends Component {
         })
       }
 
-
-      handleClickEditNote = (note) => {
-        console.log(note);
+      handleEditNote = (e, note) => {
         this.setState(
           { 
             noteid: note.noteid,
-            notetitle: note.notetitle,
-            notebody: note.notebody,
+            notetitle: e.target.id === "notetitle" ? e.target.value : note.notetitle,
+            notebody: e.target.id === "notebody" ? e.target.value : note.notebody,
             activepage: "editnote"
           }
         )
@@ -136,12 +134,12 @@ class App extends Component {
 
         let ActivePage, RightNavbar;
         if(this.state.activepage === "viewnote"){
-          RightNavbar = <NavbarRight display={true} notesData={this.state} handleClickEditNote={this.handleClickEditNote}/>
+          RightNavbar = <NavbarRight display={true} notesData={this.state} handleEditNote={this.handleEditNote}/>
           ActivePage = <NoteMain notesData={this.state}/>
         } 
         if (this.state.activepage === "editnote"){
           RightNavbar = <NavbarRight display={false}/>
-          ActivePage = <NoteEditor editNoteData={this.state}/>
+          ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote}/>
         }   
 
         return (

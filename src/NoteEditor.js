@@ -1,12 +1,11 @@
 import React from "react";
 
 function NoteEditor(props) {
-    console.log(props.editNoteData);
     var note = props.editNoteData;
   return (
       <div className="main-editor">
             <div className="title-header">
-                <input name="title" type="text" id="notetitle" placeholder="Title" autoComplete="off" value={note.notetitle}/>
+                <input name="title" type="text" id="notetitle" value={note.notetitle} placeholder="Title" autoComplete="off" onChange={((e) => props.handleEditNote(e, note))} />
             </div>
           <div className="md-editor-tools" id="mdtools">
               <button className="md-buttons" id="btnBold"><i className="fas fa-bold btn"></i></button>
@@ -30,10 +29,12 @@ function NoteEditor(props) {
                 </div>
           </div>
           <div className="md-txtarea">
-              <textarea placeholder="Note" value={note.notebody} id="notebody"/>
+              <textarea placeholder="Note" id="notebody" value={note.notebody} onChange={((e) => props.handleEditNote(e, note))} />
           </div> 
       </div>
   )
 }
 
 export default NoteEditor;
+
+
