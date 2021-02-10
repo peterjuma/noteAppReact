@@ -54,7 +54,7 @@ class App extends Component {
           noteid: noteid || '',
           notetitle: title || '',
           notebody: body || '',
-          activepage: "viewnote" // editnote // previewnote // viewnote
+          activepage: "viewnote" // editnote // previewnote // viewnote // newnote
         };
         this.handleNoteListItemClick = this.handleNoteListItemClick.bind(this)
         this.handleClickHomeBtn = this.handleClickHomeBtn.bind(this)
@@ -117,8 +117,9 @@ class App extends Component {
       }
 
       handleEditNote = (e, note) => {
+        // console.log(note)
         this.setState(
-          { 
+          {
             noteid: note.noteid,
             notetitle: e.target.id === "notetitle" ? e.target.value : note.notetitle,
             notebody: e.target.id === "notebody" ? e.target.value : note.notebody,
@@ -145,7 +146,7 @@ class App extends Component {
         return (
           <div className="container">
               <div className="left">   
-                  <NavbarLeft handleClickHomeBtn={this.handleClickHomeBtn}/>
+                  <NavbarLeft handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote}/>
                   <div className="note-list">
                       {noteListItems}
                   </div>
