@@ -8,6 +8,7 @@ import NoteEditor from "./NoteEditor"
 import notesData from "./LoremNotesum"
 import hljs from 'highlight.js';
 import './github-markdown.css';
+import "./KeyCodes.js"
 
 // Markdown
 import markdownitEmoji from "markdown-it-emoji";
@@ -51,6 +52,10 @@ class App extends Component {
         this.handleSaveNote = this.handleSaveNote.bind(this)
         this.handleDeleteNote = this.handleDeleteNote.bind(this)
         this.handlePaste = this.handlePaste.bind(this)
+        this.processInput = this.processInput.bind(this)
+        this.handleKeyEvent = this.handleKeyEvent.bind(this)
+        this.setSelectionRange = this.setSelectionRange.bind(this)
+        this.handleSearchNotes = this.handleSearchNotes.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
       componentDidMount() {
@@ -232,6 +237,114 @@ class App extends Component {
             }
         }
       };
+
+      handleKeyEvent(event) {
+        if ( event.code === "Tab" ) {
+            this.processInput('tab')
+            event.preventDefault();
+        } else if ( event.key === "\""){
+            this.processInput('doublequote')
+            event.preventDefault();
+        } else if ( event.key === "\("){
+            this.processInput('brackets')
+            event.preventDefault();
+        } else if ( event.key === "\{"){
+            this.processInput('curlybrackets')
+            event.preventDefault();
+        } else if ( event.key === "\["){
+            this.processInput('squarebrackets')
+            event.preventDefault();
+        } else if ( event.key === "\<"){
+            this.processInput('anglebrackets')
+            event.preventDefault();
+        } else if ( event.key === "\`") {
+            this.processInput('backquote')
+            event.preventDefault();
+        }
+    }
+    
+    processInput(eventcode){
+      // obtain the object reference for the textarea>
+      var txtarea = document.getElementById("notebody");
+      // obtain the index of the first selected character
+      var start = txtarea.selectionStart;
+      // obtain the index of the last selected character
+      var finish = txtarea.selectionEnd;
+      //obtain all Text
+      var allText = txtarea.value; 
+      // obtain the selected text
+      var sel = allText.substring(start, finish);
+      var img = `![alt text](${sel})`
+      var link = `[link](${sel})`
+      keyCodes["image"].pattern = img;
+      keyCodes["link"].pattern = link;
+      var keyCode = keyCodes[eventcode]
+      if(keyCode.regEx){
+          var transsel="";
+          var match = /\r|\n/.exec(sel);
+          if (match) {
+              var lines = sel.split('\n');
+              for(var i = 0;i < lines.length;i++){
+                  if(lines[i].length > 0 && lines[i] !== undefined) {
+                      transsel +=`${keyCode.pattern} ${lines[i]}\n`
+                  }  
+              }
+              sel = transsel;
+          } else {sel = sel.replace(/^/gm, `${keyCode.pattern} `)}
+          var newText = `${allText.substring(0, start)}${sel}${allText.substring(finish, allText.length)}`
+          if (newText){
+              txtarea.value=newText;
+              if(eventcode === "tab"){
+                  this.setSelectionRange(txtarea, start+sel.length, start+sel.length)
+              } else {
+                  this.setSelectionRange(txtarea, start+keyCode.offsetStart, start+keyCode.offsetStart)
+              }
+          }
+      } else {
+          if(keyCode.pattern !== ""){
+              if(eventcode == "image" || eventcode == "link") {
+                  var newText = `${allText.substring(0, start)}${keyCode.pattern}${allText.substring(finish, allText.length)}`
+              } else {
+                  var newText = `${allText.substring(0, start)}${sel}${keyCode.pattern}${allText.substring(finish, allText.length)}`
+              }
+          } else {
+              var newText = `${allText.substring(0, start)}${keyCode.open}${sel}${keyCode.close}${allText.substring(finish, allText.length)}`
+          }
+          if(newText) {
+              txtarea.value=newText;
+              this.setSelectionRange(txtarea, start+keyCode.offsetStart, finish+keyCode.offsetEnd)
+          }
+      }
+    }
+
+    setSelectionRange(input, selectionStart, selectionEnd) {
+      if (input.setSelectionRange) {
+        input.setSelectionRange(selectionStart, selectionEnd);
+      }
+      else if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+      }
+      input.blur();
+      input.focus();
+    }
+
+    handleSearchNotes(e){
+      var noteList = document.querySelectorAll('.note-list-item')
+      var searchString = (e.target.value).toUpperCase()
+      console.log(searchString);
+      for (var i = 0; i < noteList.length; i++) {
+        var title = noteList[i].innerText
+        if (title.toUpperCase().indexOf(searchString) > -1) {
+            noteList[i].style.display = "";
+        } else {
+            noteList[i].style.display = "none";
+        }
+      }
+    }
       render() {
           const noteListItems = this.state.allnotes.map((note) => (
             <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} 
@@ -245,13 +358,13 @@ class App extends Component {
           } 
           if (this.state.activepage === "editnote"){
             RightNavbar = <NavbarMain display={false}/>
-            ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote} handleSaveNote={this.handleSaveNote} handlePaste={this.handlePaste}/>
+            ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote} handleSaveNote={this.handleSaveNote} handlePaste={this.handlePaste} handleKeyEvent={this.handleKeyEvent} processInput={this.processInput}/>
           }   
 
           return (
             <div className="container">
                 <div className="left">   
-                    <NavbarSidebar handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote}/>
+                    <NavbarSidebar handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote} handleSearchNotes={this.handleSearchNotes}/>
                     <div className="note-list">
                         {noteListItems}
                     </div>
