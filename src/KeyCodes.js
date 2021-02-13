@@ -155,7 +155,7 @@ var keyCodes = {
     "heading":{
        "open":"",
        "close":"",
-       "pattern":"#",
+       "pattern":"###",
        "regEx":true,
        "offsetStart":2,
        "offsetEnd":2

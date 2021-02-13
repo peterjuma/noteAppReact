@@ -8,7 +8,7 @@ import NoteEditor from "./NoteEditor"
 import notesData from "./LoremNotesum"
 import hljs from 'highlight.js';
 import './github-markdown.css';
-import "./KeyCodes.js"
+import keyCodes from "./KeyCodes"
 
 // Markdown
 import markdownitEmoji from "markdown-it-emoji";
@@ -335,15 +335,17 @@ class App extends Component {
     handleSearchNotes(e){
       var noteList = document.querySelectorAll('.note-list-item')
       var searchString = (e.target.value).toUpperCase()
-      console.log(searchString);
+      var DisplayList = []
       for (var i = 0; i < noteList.length; i++) {
         var title = noteList[i].innerText
         if (title.toUpperCase().indexOf(searchString) > -1) {
             noteList[i].style.display = "";
+            DisplayList.push(noteList[i])
         } else {
             noteList[i].style.display = "none";
         }
       }
+      DisplayList.length > 0 && DisplayList[0].click();
     }
       render() {
           const noteListItems = this.state.allnotes.map((note) => (
