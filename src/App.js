@@ -203,7 +203,6 @@ class App extends Component {
       handlePaste (e) {
         // Prevent the default action
         e.preventDefault();
-
         if(e.clipboardData) {
             // Get the copied text from the clipboard
             const text = (e.clipboardData)
@@ -216,8 +215,17 @@ class App extends Component {
                 ? (e.originalEvent || e).clipboardData.getData('text/html')
                 // For IE
                 : (window.clipboardData ? window.clipboardData.getData('Html') : '');
-
-            const pasteData = html ? turndownService.turndown(marked(html)) : text    
+            // var pasteData = html ? turndownService.turndown(marked(html)) : turndownService.turndown(text)  
+            // /<:__|[*#]|\[.*?\]\(.*>/.test(val) // detect MD
+            let pasteData;
+            
+            if(html) {
+              pasteData = turndownService.turndown(html)
+            } else {
+              /<[a-z][\s\S]*>/i.test(text) ? pasteData = turndownService.turndown(marked(text)) 
+              : 
+              pasteData = text
+            }
 
             if (document.queryCommandSupported('insertText')) {
                 document.execCommand('insertText', false, pasteData);
@@ -338,7 +346,8 @@ class App extends Component {
       var DisplayList = []
       for (var i = 0; i < noteList.length; i++) {
         var title = noteList[i].innerText
-        if (title.toUpperCase().indexOf(searchString) > -1) {
+        var index = title.toUpperCase().indexOf(searchString) 
+        if (index > -1) {
             noteList[i].style.display = "";
             DisplayList.push(noteList[i])
         } else {
@@ -347,37 +356,37 @@ class App extends Component {
       }
       DisplayList.length > 0 && DisplayList[0].click();
     }
-      render() {
-          const noteListItems = this.state.allnotes.map((note) => (
-            <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} 
-            handleMouseOver={this.handleNoteListItemMouseOver} handleMouseOut={this.handleNoteListItemMouseOut}/>
-          ));
+    render() {
+        const noteListItems = this.state.allnotes.map((note) => (
+          <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} 
+          handleMouseOver={this.handleNoteListItemMouseOver} handleMouseOut={this.handleNoteListItemMouseOut}/>
+        ));
 
-          let ActivePage, RightNavbar;
-          if(this.state.activepage === "viewnote"){
-            RightNavbar = <NavbarMain display={true} notesData={this.state} handleEditNote={this.handleEditNote} handleDeleteNote={this.handleDeleteNote}/>
-            ActivePage = <NoteMain notesData={this.state}/>
-          } 
-          if (this.state.activepage === "editnote"){
-            RightNavbar = <NavbarMain display={false}/>
-            ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote} handleSaveNote={this.handleSaveNote} handlePaste={this.handlePaste} handleKeyEvent={this.handleKeyEvent} processInput={this.processInput}/>
-          }   
+        let ActivePage, RightNavbar;
+        if(this.state.activepage === "viewnote"){
+          RightNavbar = <NavbarMain display={true} notesData={this.state} handleEditNote={this.handleEditNote} handleDeleteNote={this.handleDeleteNote}/>
+          ActivePage = <NoteMain notesData={this.state}/>
+        } 
+        if (this.state.activepage === "editnote"){
+          RightNavbar = <NavbarMain display={false}/>
+          ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote} handleSaveNote={this.handleSaveNote} handlePaste={this.handlePaste} handleKeyEvent={this.handleKeyEvent} processInput={this.processInput}/>
+        }   
 
-          return (
-            <div className="container">
-                <div className="left">   
-                    <NavbarSidebar handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote} handleSearchNotes={this.handleSearchNotes}/>
-                    <div className="note-list">
-                        {noteListItems}
-                    </div>
-                </div>
-                <div className="right">
-                    {RightNavbar}
-                    {ActivePage}
-                </div>
-            </div>
-          );
-      }
+        return (
+          <div className="container">
+              <div className="left">   
+                  <NavbarSidebar handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote} handleSearchNotes={this.handleSearchNotes}/>
+                  <div className="note-list">
+                      {noteListItems}
+                  </div>
+              </div>
+              <div className="right">
+                  {RightNavbar}
+                  {ActivePage}
+              </div>
+          </div>
+        );
+    }
 }
 
 export default App;

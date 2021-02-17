@@ -14,7 +14,7 @@ function NavbarSidebar(props) {
             <div className="nav-bar">
                 <div className="nav-left-icon">
                     <i id="homeBtn" onClick={((e) => props.handleClickHomeBtn(e))} className="fa fa-home fa-lg btn" aria-hidden="true"></i>
-                    <p>All Notes</p>
+                    <h4>All Notes</h4>
                     <i id="addNoteBtn" data-action="addnote" onClick={((e) => props.handleEditNote(e, note))} className="fa fa-plus fa-lg btn" aria-hidden="true"></i>
                 </div>
             </div>

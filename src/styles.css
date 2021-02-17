@@ -318,3 +318,8 @@ button[disabled]:hover{
   width: 14px;
   background: transparent;
 }
+
+
+.highlight {
+  background-color: yellow;
+}

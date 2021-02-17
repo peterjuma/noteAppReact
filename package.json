@@ -16,6 +16,7 @@
     "github-markdown": "^3.2.0",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.5.0",
+    "idb": "^6.0.0",
     "jquery": "^3.5.1",
     "lorem-ipsum": "^2.0.3",
     "markdown-it": "^8.4.2",
