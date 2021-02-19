@@ -147,6 +147,10 @@ padding-bottom: 20px;
   background: #f6f5f5;
 }
 
+.note-list-item-prev {
+  background: #f6f5f5;
+}
+
 /* Highlight Clicked note item */
 .note-list-item-clicked {
   background: #ced9f2;
@@ -270,6 +274,15 @@ textarea {
 .md-editor-tools {
   border: none;
   display: flex;
+  padding-left: 30px;
+}
+
+.saveCancelBtn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  border-left: 1px solid #eee;
+  padding-right: 30px;
   padding-left: 30px;
 }
 

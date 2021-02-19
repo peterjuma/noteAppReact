@@ -51,27 +51,29 @@ class App extends Component {
         this.setSelectionRange = this.setSelectionRange.bind(this)
         this.handleSearchNotes = this.handleSearchNotes.bind(this)
         this.handleIndexedDB = this.handleIndexedDB.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
+
       async componentDidMount() {
-        const getnotesdb = await this.handleIndexedDB("getall")
-        if(getnotesdb.length == 0){      
-           this.handleClickHomeBtn()
-        } else {
-          this.setState({ 
-            noteid: getnotesdb[0].noteid || '',
-            notetitle: getnotesdb[0].title || '',
-            notebody: getnotesdb[0].body || '',
-            allnotes: getnotesdb
-          })
-        }
-        this.updateCodeSyntaxHighlighting();
+          const getnotesdb = await this.handleIndexedDB("getall")
+          if(getnotesdb.length == 0){      
+            this.handleClickHomeBtn()
+          } else {
+            this.setState({ 
+              allnotes: getnotesdb
+            })
+            document.getElementById(getnotesdb[0].noteid).click();
+          }
+          this.updateCodeSyntaxHighlighting();
       }
 
       componentDidUpdate() {
         this.updateCodeSyntaxHighlighting();
       }
-    
+
+      componentWillUnmount() {}
+        
       updateCodeSyntaxHighlighting = () => {
         document.querySelectorAll("pre code").forEach(block => {
           hljs.highlightBlock(block);
@@ -176,7 +178,16 @@ class App extends Component {
         })
       }
 
+      handleCancel = (e, note) => {
+        if(note.action === "updatenote") {
+          document.getElementById(note.noteid).click();
+        } else {
+          document.querySelectorAll(".note-list-item")[0].click();
+        }
+        
+      }
       handleEditNote = (e, note) => {
+        console.log(this.state.noteid);
         this.setState(
           {
             noteid: note.noteid,
@@ -186,10 +197,9 @@ class App extends Component {
             action: e.target.dataset.action
           }
         )
-
         if(e.target.dataset.action==="addnote"){
-          var noteList = document.querySelectorAll(".note-list-item-clicked");
-          noteList.length > 0 ? noteList.forEach(b => b.classList.remove('note-list-item-clicked')) : ""
+          var noteList = document.querySelector(".note-list-item-clicked");
+          noteList && noteList.classList.remove('note-list-item-clicked');
         }
       }
 
@@ -422,24 +432,46 @@ class App extends Component {
     }
     render() {
         const noteListItems = this.state.allnotes.map((note) => (
-          <NoteList key={note.noteid} note={note} handleClick={this.handleNoteListItemClick} 
-          handleMouseOver={this.handleNoteListItemMouseOver} handleMouseOut={this.handleNoteListItemMouseOut}/>
+          <NoteList key={note.noteid} note={note} 
+          handleClick={this.handleNoteListItemClick} 
+          handleMouseOver={this.handleNoteListItemMouseOver} 
+          handleMouseOut={this.handleNoteListItemMouseOut}
+          />
         ));
 
         let ActivePage, RightNavbar;
         if(this.state.activepage === "viewnote"){
-          RightNavbar = <NavbarMain display={true} notesData={this.state} handleEditNote={this.handleEditNote} handleDeleteNote={this.handleDeleteNote}/>
-          ActivePage = <NoteMain notesData={this.state}/>
+          RightNavbar = <NavbarMain display={true} 
+            notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
+            handleEditNote={this.handleEditNote} 
+            handleDeleteNote={this.handleDeleteNote}
+          />
+          ActivePage = <NoteMain 
+            notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
+          />
         } 
         if (this.state.activepage === "editnote"){
           RightNavbar = <NavbarMain display={false}/>
-          ActivePage = <NoteEditor editNoteData={this.state} handleEditNote={this.handleEditNote} handleSaveNote={this.handleSaveNote} handlePaste={this.handlePaste} handleKeyEvent={this.handleKeyEvent} processInput={this.processInput}/>
+          ActivePage = 
+          <NoteEditor 
+            editNoteData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}} 
+            handleEditNote={this.handleEditNote} 
+            handleSaveNote={this.handleSaveNote} 
+            handlePaste={this.handlePaste} 
+            handleKeyEvent={this.handleKeyEvent} 
+            processInput={this.processInput} 
+            handleCancel={this.handleCancel}
+          />
         }   
 
         return (
           <div className="container">
               <div className="left">   
-                  <NavbarSidebar handleClickHomeBtn={this.handleClickHomeBtn} handleEditNote={this.handleEditNote} handleSearchNotes={this.handleSearchNotes}/>
+                  <NavbarSidebar 
+                  handleClickHomeBtn={this.handleClickHomeBtn} 
+                  handleEditNote={this.handleEditNote} 
+                  handleSearchNotes={this.handleSearchNotes}
+                  />
                   <div className="note-list">
                       {noteListItems}
                   </div>
