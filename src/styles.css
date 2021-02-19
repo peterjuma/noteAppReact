@@ -175,7 +175,7 @@ button {
 }
 
 .main {
-  padding: 30px 150px;
+  padding: 10px 150px;
   overflow-y: scroll;
   height: calc(100% - 30px);
   display: flex;
@@ -201,7 +201,6 @@ button {
 }
 
  /* Boostrap CSS */
-
 h1{
   font-size: 4.5rem;
   font-weight: 300;
@@ -222,6 +221,12 @@ h3 {
 
 .title-header {
   margin: 0;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 5px 0 20px;
+  border-bottom: 1px solid #eee;
 }
 
 #notetitle {
@@ -265,6 +270,7 @@ textarea {
 .md-editor-tools {
   border: none;
   display: flex;
+  padding-left: 30px;
 }
 
 .md-buttons {

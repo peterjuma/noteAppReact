@@ -27,7 +27,6 @@ function NoteMain(props) {
             <div className="page-header">
                 <h2 id="notetitle-view">{notesData.notetitle}</h2>
             </div>
-            <hr/>
             <div className="markdown-body" id="notebody-view" dangerouslySetInnerHTML={{ __html: md.render(notesData.notebody)}}>
             </div>
         </div>

@@ -5,10 +5,11 @@ import NoteList from "./NoteList"
 import NoteMain from "./NoteMain"
 import readmePath from './README.md'
 import NoteEditor from "./NoteEditor"
-import notesData from "./LoremNotesum"
 import hljs from 'highlight.js';
 import './github-markdown.css';
-import keyCodes from "./KeyCodes"
+import keyCodes from "./KeyCodes";
+
+import {openDB} from 'idb/with-async-ittr.js';
 
 // Markdown
 import markdownitEmoji from "markdown-it-emoji";
@@ -27,23 +28,16 @@ md.use(markdownitEmoji);
 // Task List
 md.use(markdownitTaskLists)
 
-// Load First Note
-if (notesData.length > 0) {
-  var noteid = notesData[0].noteid
-  var title = notesData[0].title
-  var body = notesData[0].body
-}
-
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          noteid: noteid || '',
-          notetitle: title || '',
-          notebody: body || '',
+          noteid: '',
+          notetitle: '',
+          notebody: '',
           activepage: "viewnote", // editnote // previewnote // viewnote 
           action:'', // addnote // updatenote
-          allnotes: notesData
+          allnotes: []
         };
         this.handleNoteListItemClick = this.handleNoteListItemClick.bind(this)
         this.handleClickHomeBtn = this.handleClickHomeBtn.bind(this)
@@ -56,11 +50,20 @@ class App extends Component {
         this.handleKeyEvent = this.handleKeyEvent.bind(this)
         this.setSelectionRange = this.setSelectionRange.bind(this)
         this.handleSearchNotes = this.handleSearchNotes.bind(this)
+        this.handleIndexedDB = this.handleIndexedDB.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
-      componentDidMount() {
-        if(notesData.length == 0){      
-          this.handleClickHomeBtn()
+      async componentDidMount() {
+        const getnotesdb = await this.handleIndexedDB("getall")
+        if(getnotesdb.length == 0){      
+           this.handleClickHomeBtn()
+        } else {
+          this.setState({ 
+            noteid: getnotesdb[0].noteid || '',
+            notetitle: getnotesdb[0].title || '',
+            notebody: getnotesdb[0].body || '',
+            allnotes: getnotesdb
+          })
         }
         this.updateCodeSyntaxHighlighting();
       }
@@ -74,6 +77,53 @@ class App extends Component {
           hljs.highlightBlock(block);
         });
       };
+
+      // Indexed DB class 
+      async handleIndexedDB (cmd = "", note = "") {
+          const db =  await openDB('Notes', 1, {
+              upgrade(db) {
+                  // Create a store of objects
+                  const store = db.createObjectStore('notesdb', {
+                  // The 'noteid' property of the object will be the key.
+                  keyPath: 'noteid',
+                  // If it isn't explicitly set, create a value by auto incrementing.
+                  autoIncrement: true,
+                  });
+                  // Create an index on the 'noteid' & date property of the objects.
+                  store.createIndex('created_at', 'date');
+                  store.createIndex('noteid', 'noteid');
+              }
+          });
+
+          // 1. Create single note
+          if(cmd==="addnote"){
+              await db.add("notesdb", note)
+          }
+          // 2.1 Read all notes
+          if(cmd==="getall"){
+              let notes = await db.getAll('notesdb')
+              return notes
+          }
+          // 2.2 Read single note
+          if(cmd==="getone"){
+              const db = await openDB('Notes', 1);
+              const tx = db.transaction('notesdb');
+              const idx = tx.store.index('noteid');
+              let onenote = await idx.get(note)
+              return onenote
+          }
+          // 3. Update single note
+          if(cmd==="update"){
+              const db = await openDB('Notes', 1);
+              db.put('notesdb', note)
+          }
+          // 4. Delete single note
+          if(cmd==="delete"){
+              const db = await openDB('Notes', 1);
+              db.delete('notesdb', note.noteid)
+          }
+          db.close()
+      }
 
       // Handle Click List Item
       handleNoteListItemClick = (e, note) => {
@@ -136,6 +186,7 @@ class App extends Component {
             action: e.target.dataset.action
           }
         )
+
         if(e.target.dataset.action==="addnote"){
           var noteList = document.querySelectorAll(".note-list-item-clicked");
           noteList.length > 0 ? noteList.forEach(b => b.classList.remove('note-list-item-clicked')) : ""
@@ -151,15 +202,10 @@ class App extends Component {
               }
             }); 
             return { 
-              noteid: this.state.allnotes[index].noteid,
-              notetitle: this.state.allnotes[index].title,
-              notebody: this.state.allnotes[index].body,
-              activepage: "viewnote",
-              action: '',
               allnotes: updatedNotes
               };
           });
-          
+          this.handleIndexedDB("delete", note)
           if(this.state.allnotes.length-1==0){
             this.handleClickHomeBtn()
           } else {
@@ -197,7 +243,25 @@ class App extends Component {
               activepage: "viewnote",
               action: note.action
             })
+
+            this.handleIndexedDB("addnote",             
+            { 
+              noteid: note.noteid,
+              title: document.getElementById('notetitle').value,
+              body: document.getElementById('notebody').value,
+              created_at: Date.now(),
+              updated_at: ""
+            })
         }
+
+        this.handleIndexedDB("update",             
+        { 
+          noteid: note.noteid,
+          title: document.getElementById('notetitle').value,
+          body: document.getElementById('notebody').value,
+          updated_at: Date.now()
+        })
+        
       }
        
       handlePaste (e) {
