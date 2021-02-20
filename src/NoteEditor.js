@@ -2,6 +2,9 @@ import React from "react";
 
 function NoteEditor(props) {
     var note = props.editNoteData;
+    const ButtonStyle = {
+        border: '1px solid #dcdcde'
+    }
     return (
         <div className="main-editor">
             <div className="title-header">
@@ -18,12 +21,12 @@ function NoteEditor(props) {
                 <i className="far fa-image fa-lg btn" onClick={((e) => props.processInput("image"))}></i>
                 <i className="fas fa-terminal btn" onClick={((e) => props.processInput("backticks"))}></i>
                 <i className="fas fa-code btn" onClick={((e) => props.processInput("codeblock"))}></i>
-                <i className="fas fa-check-square btn" onClick={((e) => props.processInput("tasklist"))}></i>
+                <i className="far fa-check-square btn" onClick={((e) => props.processInput("tasklist"))}></i>
                 <i className="fas fa-table btn" onClick={((e) => props.processInput("table"))}></i>
                 <i className="fas fa-strikethrough btn" onClick={((e) => props.processInput("strike"))}></i>
                 <div className="saveCancelBtn">
-                    <i className="fas fa-save btn" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}></i>
-                    <i className="fas fa-window-close btn" onClick={((e) => props.handleCancel(e, note))}></i>
+                    <i className="far fa-save fa-lg btn" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}></i>
+                    <i className="far fa-window-close fa-lg btn" onClick={((e) => props.handleCancel(e, note))}></i>
                 </div>
             </div>
             <div className="md-txtarea">
@@ -42,5 +45,3 @@ function NoteEditor(props) {
 }
 
 export default NoteEditor;
-
-

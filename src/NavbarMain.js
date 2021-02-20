@@ -1,6 +1,5 @@
 import react from "react";
 
-
 function NavbarMain(props) {
     var isActive = props.display
     var note = props.notesData;    

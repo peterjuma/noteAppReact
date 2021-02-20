@@ -8,9 +8,7 @@ import NoteEditor from "./NoteEditor"
 import hljs from 'highlight.js';
 import './github-markdown.css';
 import keyCodes from "./KeyCodes";
-
 import {openDB} from 'idb/with-async-ittr.js';
-
 // Markdown
 import markdownitEmoji from "markdown-it-emoji";
 import markdownitTaskLists from "markdown-it-task-lists";
@@ -71,9 +69,7 @@ class App extends Component {
       componentDidUpdate() {
         this.updateCodeSyntaxHighlighting();
       }
-
-      componentWillUnmount() {}
-        
+       
       updateCodeSyntaxHighlighting = () => {
         document.querySelectorAll("pre code").forEach(block => {
           hljs.highlightBlock(block);
@@ -96,7 +92,6 @@ class App extends Component {
                   store.createIndex('noteid', 'noteid');
               }
           });
-
           // 1. Create single note
           if(cmd==="addnote"){
               await db.add("notesdb", note)
@@ -172,7 +167,7 @@ class App extends Component {
                 notetitle: readmetitle,
                 notebody: readmebody,
                 activepage: "viewnote",
-                action:''
+                action:'homepage'
               }
           )
         })
@@ -187,7 +182,6 @@ class App extends Component {
         
       }
       handleEditNote = (e, note) => {
-        console.log(this.state.noteid);
         this.setState(
           {
             noteid: note.noteid,
@@ -221,12 +215,11 @@ class App extends Component {
           } else {
             var nextnote = this.state.allnotes[index+1]? this.state.allnotes[index+1] : this.state.allnotes[index-1]
             this.handleNoteListItemClick('', nextnote)
-          }
-          
+          } 
       }
 
       handleSaveNote(e, note) {
-          this.setState((prevState) => {
+         this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
                   if (noteitem.noteid === note.noteid) {
                       noteitem.title = document.getElementById('notetitle').value
@@ -262,16 +255,15 @@ class App extends Component {
               created_at: Date.now(),
               updated_at: ""
             })
-        }
-
-        this.handleIndexedDB("update",             
-        { 
-          noteid: note.noteid,
-          title: document.getElementById('notetitle').value,
-          body: document.getElementById('notebody').value,
-          updated_at: Date.now()
-        })
-        
+          } else { // if note.action == "editnote"
+              this.handleIndexedDB("update",             
+              { 
+                noteid: note.noteid,
+                title: document.getElementById('notetitle').value,
+                body: document.getElementById('notebody').value,
+                updated_at: Date.now()
+              })
+          }   
       }
        
       handlePaste (e) {
@@ -441,7 +433,7 @@ class App extends Component {
 
         let ActivePage, RightNavbar;
         if(this.state.activepage === "viewnote"){
-          RightNavbar = <NavbarMain display={true} 
+          RightNavbar = <NavbarMain display={this.state.action !== "homepage" && true} 
             notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
             handleEditNote={this.handleEditNote} 
             handleDeleteNote={this.handleDeleteNote}
@@ -468,9 +460,9 @@ class App extends Component {
           <div className="container">
               <div className="left">   
                   <NavbarSidebar 
-                  handleClickHomeBtn={this.handleClickHomeBtn} 
-                  handleEditNote={this.handleEditNote} 
-                  handleSearchNotes={this.handleSearchNotes}
+                    handleClickHomeBtn={this.handleClickHomeBtn} 
+                    handleEditNote={this.handleEditNote} 
+                    handleSearchNotes={this.handleSearchNotes}
                   />
                   <div className="note-list">
                       {noteListItems}
