@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/noteAppReact/static/css/main.aefe2bc8.chunk.css",
-    "main.js": "/noteAppReact/static/js/main.754117f6.chunk.js",
-    "main.js.map": "/noteAppReact/static/js/main.754117f6.chunk.js.map",
+    "main.css": "/noteAppReact/static/css/main.d7062840.chunk.css",
+    "main.js": "/noteAppReact/static/js/main.2a371786.chunk.js",
+    "main.js.map": "/noteAppReact/static/js/main.2a371786.chunk.js.map",
     "runtime-main.js": "/noteAppReact/static/js/runtime-main.dc7b4ba4.js",
     "runtime-main.js.map": "/noteAppReact/static/js/runtime-main.dc7b4ba4.js.map",
     "static/js/2.f319bc2c.chunk.js": "/noteAppReact/static/js/2.f319bc2c.chunk.js",
     "static/js/2.f319bc2c.chunk.js.map": "/noteAppReact/static/js/2.f319bc2c.chunk.js.map",
     "index.html": "/noteAppReact/index.html",
-    "static/css/main.aefe2bc8.chunk.css.map": "/noteAppReact/static/css/main.aefe2bc8.chunk.css.map",
+    "static/css/main.d7062840.chunk.css.map": "/noteAppReact/static/css/main.d7062840.chunk.css.map",
     "static/js/2.f319bc2c.chunk.js.LICENSE.txt": "/noteAppReact/static/js/2.f319bc2c.chunk.js.LICENSE.txt",
     "static/media/README.7753bf41.md": "/noteAppReact/static/media/README.7753bf41.md"
   },
   "entrypoints": [
     "static/js/runtime-main.dc7b4ba4.js",
     "static/js/2.f319bc2c.chunk.js",
-    "static/css/main.aefe2bc8.chunk.css",
-    "static/js/main.754117f6.chunk.js"
+    "static/css/main.d7062840.chunk.css",
+    "static/js/main.2a371786.chunk.js"
   ]
 }
