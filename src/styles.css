@@ -181,10 +181,9 @@ button {
 .main {
   padding: 10px 150px;
   overflow-y: scroll;
-  height: calc(100% - 30px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   position: relative;
 }
 
@@ -193,7 +192,6 @@ button {
   height: calc(100% - 10px);
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   position: relative;
 }
 
