@@ -50,6 +50,7 @@ class App extends Component {
         this.handleSearchNotes = this.handleSearchNotes.bind(this)
         this.handleIndexedDB = this.handleIndexedDB.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
+        this.handleCopyNote = this.handleCopyNote.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
 
@@ -287,8 +288,7 @@ class App extends Component {
                 ? (e.originalEvent || e).clipboardData.getData('text/html')
                 // For IE
                 : (window.clipboardData ? window.clipboardData.getData('Html') : '');
-            // var pasteData = html ? turndownService.turndown(marked(html)) : turndownService.turndown(text)  
-            // /<:__|[*#]|\[.*?\]\(.*>/.test(val) // detect MD
+
             let pasteData;
             
             if(html) {
@@ -317,6 +317,37 @@ class App extends Component {
             }
         }
       };
+
+      handleCopyNote(e, note) {
+        const notecopy = `## ${note.notetitle}\n${note.notebody}`;
+        var textArea = document.createElement("textarea");
+        // Place in top-left corner of screen regardless of scroll position.
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+        // Ensure it has a small width and height. Setting to 1px / 1em
+        // doesn't work as this gives a negative w/h on some browsers.
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        // We don't need padding, reducing the size if it does flash render.
+        textArea.style.padding = 0;
+        // Clean up any borders.
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        // Avoid flash of white box if rendered for any reason.
+        textArea.style.background = 'transparent';
+        textArea.value = notecopy;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            var successful = document.execCommand('copy');
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        document.body.removeChild(textArea);
+      }
 
       handleKeyEvent(event) {
         if ( event.code === "Tab" ) {
@@ -443,6 +474,7 @@ class App extends Component {
             notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
             handleEditNote={this.handleEditNote} 
             handleDeleteNote={this.handleDeleteNote}
+            handleCopyNote={this.handleCopyNote}
           />
           ActivePage = <NoteMain 
             notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
