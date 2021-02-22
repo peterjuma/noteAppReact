@@ -466,9 +466,9 @@ class App extends Component {
                     handleEditNote={this.handleEditNote} 
                     handleSearchNotes={this.handleSearchNotes}
                   />
-                  <div className="note-list">
-                      {noteListItems}
-                  </div>
+                  <ul className="note-list">
+                        {noteListItems}
+                  </ul>
               </div>
               <div className="right">
                   {RightNavbar}
