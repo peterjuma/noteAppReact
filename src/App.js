@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavbarSidebar from "./NavbarSidebar"
+import NoteSearch from "./NoteSearch"
 import NavbarMain from "./NavbarMain"
 import NoteList from "./NoteList"
 import NoteMain from "./NoteMain"
@@ -34,7 +35,8 @@ class App extends Component {
           notetitle: '',
           notebody: '',
           activepage: "viewnote", // editnote // previewnote // viewnote 
-          action:'', // addnote // updatenote
+          action: '', // addnote // updatenote
+          sortby: '4', //"0" - Title: A-Z, "1" - Title: Z-A, "2" - Created: Newest, "3" - Created: Oldest, "4" - Modified: Newest, "5" - Modified: Oldest
           allnotes: []
         };
         this.handleNoteListItemClick = this.handleNoteListItemClick.bind(this)
@@ -51,6 +53,7 @@ class App extends Component {
         this.handleIndexedDB = this.handleIndexedDB.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
         this.handleCopyNote = this.handleCopyNote.bind(this)
+        this.handleSortNotes = this.handleSortNotes.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
 
@@ -83,16 +86,14 @@ class App extends Component {
               upgrade(db) {
                   // Create a store of objects
                   const store = db.createObjectStore('notes', {
-                  // The 'noteid' property of the object will be the key.
-                  keyPath: 'noteid',
+                  // The 'created_at' property of the object will be the key.
+                  keyPath: 'created_at',
                   // If it isn't explicitly set, create a value by auto incrementing.
                   autoIncrement: true,
                   });
-                  // Create an index on the 'noteid' & date property of the objects.
+                  // Create an index on all fields of the objects.
                   store.createIndex('created_at', 'created_at');
-                  store.createIndex('updated_at', 'updated_at');
-                  store.createIndex('title', 'title');
-                  store.createIndex('body', 'body');
+                  store.createIndex('noteid', 'noteid');
               }
           });
           // 1. Create single note
@@ -176,6 +177,46 @@ class App extends Component {
         })
       }
 
+      handleSortNotes = (sortby) => {
+        // "0" - Title: A-Z, "1" - Title: Z-A, "2" - Created: Newest, "3" - Created: Oldest, "4" - Modified: Newest, "5" - Modified: Oldest
+        var notesArray = [...this.state.allnotes]      
+        var sortvalue = event ? event.target.value : sortby;
+        switch (sortvalue) {
+          case "0":
+              notesArray.sort(function (a, b) {
+                let x = a.title.toUpperCase(),
+                    y = b.title.toUpperCase();
+                return x == y ? 0 : x > y ? 1 : -1;
+              });
+              break;
+          case "1":
+              notesArray.sort(function (a, b) {
+                let x = a.title.toUpperCase(),
+                    y = b.title.toUpperCase();
+                return x == y ? 0 : x > y ? -1 : 1;
+              });
+              break;
+          case "2":
+              notesArray.sort((a, b) => b.created_at - a.created_at)
+              break;
+            case "3":
+              notesArray.sort((a, b) =>  a.created_at - b.created_at) 
+              break;
+          case "4":
+              notesArray.sort((a, b) => b.updated_at - a.updated_at)
+              break;
+          case "5":
+              notesArray.sort((a, b) => a.updated_at - b.updated_at)
+              break;
+          default:
+        }
+        this.setState({
+          sortby: sortvalue,
+          allnotes: notesArray
+        })
+
+      }
+
       handleCancel = (e, note) => {
         if(note.action === "updatenote") {
           document.getElementById(note.noteid).click();
@@ -257,7 +298,7 @@ class App extends Component {
               title: document.getElementById('notetitle').value,
               body: notebody,
               created_at: Date.now(),
-              updated_at: ""
+              updated_at: Date.now()
             })
           } else { // if note.action == "editnote"
               this.handleIndexedDB("update",             
@@ -456,7 +497,7 @@ class App extends Component {
       DisplayList.length > 0 && DisplayList[0].click();
     }
     render() {
-        const noteListItems = this.state.allnotes.map((note) => (
+        const noteListItems = (this.state.allnotes).map((note) => (
           <NoteList key={note.noteid} note={note} 
           handleClick={this.handleNoteListItemClick} 
           handleMouseOver={this.handleNoteListItemMouseOver} 
@@ -501,6 +542,7 @@ class App extends Component {
                   <ul className="note-list">
                         {noteListItems}
                   </ul>
+                  <NoteSearch handleSortNotes={this.handleSortNotes}/>
               </div>
               <div className="right">
                   {RightNavbar}

@@ -10,7 +10,7 @@ function NavbarSidebar(props) {
         action: "addnote"
     }
     return (
-        <>
+        <div>
             <div className="nav-bar">
                 <div className="nav-left-icon">
                     <i id="homeBtn" onClick={((e) => props.handleClickHomeBtn(e))} className="fa fa-home fa-lg btn" aria-hidden="true"></i>
@@ -27,7 +27,7 @@ function NavbarSidebar(props) {
                     onChange={((e) => props.handleSearchNotes(e))}
                 />
             </div>
-        </>
+        </div>
     )
 }
 
