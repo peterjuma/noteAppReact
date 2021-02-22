@@ -121,7 +121,6 @@ padding: 7px;
 /* Note List Container*/
 .note-list {
   padding-left: 15px;
-  position: inherit;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-bottom: 0;
