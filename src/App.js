@@ -54,14 +54,14 @@ class App extends Component {
       }
 
       async componentDidMount() {
-          const getnotesdb = await this.handleIndexedDB("getall")
-          if(getnotesdb.length == 0){      
+          const getnotes = await this.handleIndexedDB("getall")
+          if(getnotes.length == 0){      
             this.handleClickHomeBtn()
           } else {
             this.setState({ 
-              allnotes: getnotesdb
+              allnotes: getnotes
             })
-            document.getElementById(getnotesdb[0].noteid).click();
+            document.getElementById(getnotes[0].noteid).click();
           }
           this.updateCodeSyntaxHighlighting();
       }
@@ -78,46 +78,48 @@ class App extends Component {
 
       // Indexed DB class 
       async handleIndexedDB (cmd = "", note = "") {
-          const db =  await openDB('Notes', 1, {
+          const db =  await openDB('notesdb', 1, {
               upgrade(db) {
                   // Create a store of objects
-                  const store = db.createObjectStore('notesdb', {
+                  const store = db.createObjectStore('notes', {
                   // The 'noteid' property of the object will be the key.
                   keyPath: 'noteid',
                   // If it isn't explicitly set, create a value by auto incrementing.
                   autoIncrement: true,
                   });
                   // Create an index on the 'noteid' & date property of the objects.
-                  store.createIndex('created_at', 'date');
-                  store.createIndex('noteid', 'noteid');
+                  store.createIndex('created_at', 'created_at');
+                  store.createIndex('updated_at', 'updated_at');
+                  store.createIndex('title', 'title');
+                  store.createIndex('body', 'body');
               }
           });
           // 1. Create single note
           if(cmd==="addnote"){
-              await db.add("notesdb", note)
+              await db.add("notes", note)
           }
           // 2.1 Read all notes
           if(cmd==="getall"){
-              let notes = await db.getAll('notesdb')
+              let notes = await db.getAll('notes')
               return notes
           }
           // 2.2 Read single note
           if(cmd==="getone"){
-              const db = await openDB('Notes', 1);
-              const tx = db.transaction('notesdb');
+              const db = await openDB('notesdb', 1);
+              const tx = db.transaction('notes');
               const idx = tx.store.index('noteid');
               let onenote = await idx.get(note)
               return onenote
           }
           // 3. Update single note
           if(cmd==="update"){
-              const db = await openDB('Notes', 1);
-              db.put('notesdb', note)
+              const db = await openDB('notesdb', 1);
+              db.put('notes', note)
           }
           // 4. Delete single note
           if(cmd==="delete"){
-              const db = await openDB('Notes', 1);
-              db.delete('notesdb', note.noteid)
+              const db = await openDB('notesdb', 1);
+              db.delete('notes', note.noteid)
           }
           db.close()
       }
