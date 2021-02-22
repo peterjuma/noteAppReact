@@ -80,6 +80,8 @@ class App extends Component {
         });
       };
 
+
+
       // Indexed DB class 
       async handleIndexedDB (cmd = "", note = "") {
           const db =  await openDB('notesdb', 1, {
@@ -263,7 +265,8 @@ class App extends Component {
       }
 
       handleSaveNote(e, note) {
-        var notebody = document.getElementById('notebody').value
+        var notebody = turndownService.turndown(marked(marked(document.getElementById('notebody').value))).replace(/ /g,"_");
+        console.log(notebody);
          this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
                   if (noteitem.noteid === note.noteid) {
