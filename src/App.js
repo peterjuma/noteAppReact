@@ -222,10 +222,7 @@ class App extends Component {
       }
 
       handleSaveNote(e, note) {
-
-        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var notebody = document.getElementById('notebody').value
-        notebody = notebody.replace(exp, "[$1]($1)")
          this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
                   if (noteitem.noteid === note.noteid) {
@@ -289,8 +286,7 @@ class App extends Component {
                 // For IE
                 : (window.clipboardData ? window.clipboardData.getData('Html') : '');
 
-            let pasteData;
-            
+            let pasteData; 
             if(html) {
               pasteData = turndownService.turndown(html)
             } else {
