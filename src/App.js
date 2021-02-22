@@ -221,11 +221,15 @@ class App extends Component {
       }
 
       handleSaveNote(e, note) {
+
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var notebody = document.getElementById('notebody').value
+        notebody = notebody.replace(exp, "[$1]($1)")
          this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
                   if (noteitem.noteid === note.noteid) {
                       noteitem.title = document.getElementById('notetitle').value
-                      noteitem.body = document.getElementById('notebody').value
+                      noteitem.body = notebody
                       noteitem.activepage = "viewnote"
                   }
                   return noteitem;
@@ -233,7 +237,7 @@ class App extends Component {
               return {
                 noteid: note.noteid,
                 notetitle: document.getElementById('notetitle').value,
-                notebody: document.getElementById('notebody').value,
+                notebody: notebody,
                 activepage: "viewnote",
                 action: note.action,
                 allnotes: updatedNotes
@@ -244,7 +248,7 @@ class App extends Component {
             { 
               noteid: note.noteid,
               notetitle: document.getElementById('notetitle').value,
-              notebody: document.getElementById('notebody').value,
+              notebody: notebody,
               activepage: "viewnote",
               action: note.action
             })
@@ -253,7 +257,7 @@ class App extends Component {
             { 
               noteid: note.noteid,
               title: document.getElementById('notetitle').value,
-              body: document.getElementById('notebody').value,
+              body: notebody,
               created_at: Date.now(),
               updated_at: ""
             })
@@ -262,7 +266,7 @@ class App extends Component {
               { 
                 noteid: note.noteid,
                 title: document.getElementById('notetitle').value,
-                body: document.getElementById('notebody').value,
+                body: notebody,
                 updated_at: Date.now()
               })
           }   

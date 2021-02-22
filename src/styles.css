@@ -177,7 +177,7 @@ button {
 }
 
 .main {
-  padding: 10px 75px 50px;
+  padding: 20px 200px 50px;
   overflow-y: scroll;
   height: 100vh;
   display: flex;
