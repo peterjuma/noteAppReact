@@ -125,6 +125,7 @@ padding: 7px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-bottom: 0;
+  height: calc(100% - 162.5px)
 }
 
 /* Note List item */
