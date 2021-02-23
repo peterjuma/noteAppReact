@@ -18,15 +18,15 @@ function NoteEditor(props) {
                 <i className="fas fa-list-ol btn" onClick={((e) => props.processInput("olist"))}></i>
                 <i className="fas fa-list btn" onClick={((e) => props.processInput("ulist"))}></i>
                 <i className="fas fa-quote-left btn" onClick={((e) => props.processInput("blockquote"))}></i>
-                <i className="far fa-image fa-lg btn" onClick={((e) => props.processInput("image"))}></i>
+                <i className="far fa-image btn" onClick={((e) => props.processInput("image"))}></i>
                 <i className="fas fa-terminal btn" onClick={((e) => props.processInput("backticks"))}></i>
                 <i className="fas fa-code btn" onClick={((e) => props.processInput("codeblock"))}></i>
                 <i className="far fa-check-square btn" onClick={((e) => props.processInput("tasklist"))}></i>
                 <i className="fas fa-table btn" onClick={((e) => props.processInput("table"))}></i>
                 <i className="fas fa-strikethrough btn" onClick={((e) => props.processInput("strike"))}></i>
+                <i className="fas fa-save btn" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}></i>
                 <div className="saveCancelBtn">
-                    <i className="far fa-save fa-lg btn" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}></i>
-                    <i className="far fa-window-close fa-lg btn" onClick={((e) => props.handleCancel(e, note))}></i>
+                    <i className="fas fa-window-close  btn" onClick={((e) => props.handleCancel(e, note))}></i>
                 </div>
             </div>
             <div className="md-txtarea">
