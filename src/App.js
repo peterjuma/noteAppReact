@@ -55,7 +55,6 @@ class App extends Component {
         this.handleCopyNote = this.handleCopyNote.bind(this)
         this.handleSortNotes = this.handleSortNotes.bind(this)
         this.updateCodeSyntaxHighlighting();
-        this.handleUnload = this.handleUnload.bind(this);
       }
 
       async componentDidMount() {
@@ -69,7 +68,6 @@ class App extends Component {
             document.getElementById(getnotes[0].noteid).click();
           }
           this.updateCodeSyntaxHighlighting();
-          this.handleUnload();
       }
 
       componentDidUpdate() {
@@ -81,12 +79,6 @@ class App extends Component {
           hljs.highlightBlock(block);
         });
       };
-
-      handleUnload(e) {
-        window.addEventListener('beforeunload', (event) => {
-          event.returnValue = `Are you sure you want to leave?`;
-        });
-      }
 
       // Indexed DB class 
       async handleIndexedDB (cmd = "", note = "") {
