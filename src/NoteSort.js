@@ -1,12 +1,10 @@
-
-
 import react from "react";
-
-function NoteSearch(props) {
+function NoteSort(props) {
     return (
         <div className="sort-order-selector">
             <label>Sort by:  
                 <select id="sort-selection" onChange={((e) => props.handleSortNotes())}>
+                    <option value="" selected disabled hidden> Choose here</option>
                     <option value="3">Created: Oldest</option>
                     <option value="2">Created: Newest</option>
                     <option value="0">Title: A-Z</option>
@@ -19,4 +17,4 @@ function NoteSearch(props) {
     )
 }
 
-export default NoteSearch
+export default NoteSort

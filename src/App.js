@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NavbarSidebar from "./NavbarSidebar"
-import NoteSearch from "./NoteSearch"
+import NoteSort from "./NoteSort"
 import NavbarMain from "./NavbarMain"
 import NoteList from "./NoteList"
 import NoteMain from "./NoteMain"
@@ -283,6 +283,7 @@ class App extends Component {
                 allnotes: updatedNotes
               };
           });
+          // Update List View
           if(note.action == "addnote"){
             this.state.allnotes.push(
             { 
@@ -290,9 +291,11 @@ class App extends Component {
               notetitle: document.getElementById('notetitle').value,
               notebody: notebody,
               activepage: "viewnote",
+              created_at: Date.now(),
+              updated_at: Date.now(),
               action: note.action
             })
-
+            // Update IndexedDB
             this.handleIndexedDB("addnote",             
             { 
               noteid: note.noteid,
@@ -543,7 +546,7 @@ class App extends Component {
                   <ul className="note-list">
                         {noteListItems}
                   </ul>
-                  <NoteSearch handleSortNotes={this.handleSortNotes}/>
+                  <NoteSort handleSortNotes={this.handleSortNotes}/>
               </div>
               <div className="right">
                   {RightNavbar}
