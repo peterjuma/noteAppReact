@@ -86,8 +86,10 @@ padding-left: 0;
 }
 
 /* Navbar icons - right  */
-.nav-right-icon{
-padding: 7px;
+.nav-right-icon {
+  padding: 7px;
+  padding-left: 10em;
+  padding-right: 10em;
 }
 
 /* Search Bar */
@@ -168,7 +170,7 @@ ul, ol {
   line-height: 44px; 
   border-top: 1px solid #dcdcde;;  
   margin: 0; 
-  padding: 0 24px 0 16px; 
+  padding: 0 24px 0 20px; 
   font-size: 14px; 
   bottom: 0;
   }
