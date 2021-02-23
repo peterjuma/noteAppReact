@@ -55,6 +55,7 @@ class App extends Component {
         this.handleCopyNote = this.handleCopyNote.bind(this)
         this.handleSortNotes = this.handleSortNotes.bind(this)
         this.updateCodeSyntaxHighlighting();
+        this.handleUnload = this.handleUnload.bind(this);
       }
 
       async componentDidMount() {
@@ -68,6 +69,7 @@ class App extends Component {
             document.getElementById(getnotes[0].noteid).click();
           }
           this.updateCodeSyntaxHighlighting();
+          this.handleUnload();
       }
 
       componentDidUpdate() {
@@ -80,6 +82,15 @@ class App extends Component {
         });
       };
 
+<<<<<<< HEAD
+=======
+      handleUnload(e) {
+        window.addEventListener('beforeunload', (event) => {
+          event.returnValue = `Are you sure you want to leave?`;
+        });
+      }
+
+>>>>>>> a2429fa9aa6c09c226478f9350c55f11443007ba
       // Indexed DB class 
       async handleIndexedDB (cmd = "", note = "") {
           const db =  await openDB('notesdb', 1, {
