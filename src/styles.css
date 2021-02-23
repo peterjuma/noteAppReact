@@ -266,8 +266,7 @@ h3 {
 
 #notetitle {
   height: 50px;
-  padding: 20px;
-  padding-left: 40px;
+  padding: 16px 190px;
   width: 100%;
   border: none;
   border-bottom: 1px solid #dcdcde;
@@ -277,9 +276,9 @@ h3 {
 
 /* Editor Textarea */
 textarea {
-  padding-left: 40px;
-  padding-right: 50px;
-  padding-top: 20px;
+  padding-left: 200px;
+  padding-right: 190px;
+  padding-top: 50px;
   padding-bottom: 50px;
   font-size: 16px;
   font-weight: 200;
@@ -305,7 +304,7 @@ textarea {
 .md-editor-tools {
   border: none;
   display: flex;
-  padding: 14.5px 30px;
+  padding: 14.5px 175px;
 }
 
 .saveCancelBtn {

@@ -265,7 +265,7 @@ class App extends Component {
       }
 
       handleSaveNote(e, note) {
-        var notebody = turndownService.turndown(marked(marked(document.getElementById('notebody').value))).replace(/ /g,"_");
+        var notebody = turndownService.turndown(marked(marked(document.getElementById('notebody').value)));
         console.log(notebody);
          this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
