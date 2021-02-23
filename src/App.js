@@ -68,7 +68,6 @@ class App extends Component {
             document.getElementById(getnotes[0].noteid).click();
           }
           this.updateCodeSyntaxHighlighting();
-          this.handleUnload();
       }
 
       componentDidUpdate() {
