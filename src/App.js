@@ -53,6 +53,7 @@ class App extends Component {
         this.handleIndexedDB = this.handleIndexedDB.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
         this.handleCopyNote = this.handleCopyNote.bind(this)
+        this.handleCopyEvent = this.handleCopyEvent.bind(this)
         this.handleSortNotes = this.handleSortNotes.bind(this)
         this.updateCodeSyntaxHighlighting();
       }
@@ -86,8 +87,8 @@ class App extends Component {
               upgrade(db) {
                   // Create a store of objects
                   const store = db.createObjectStore('notes', {
-                  // The 'created_at' property of the object will be the key.
-                  keyPath: 'created_at',
+                  // The 'noteid' property of the object will be the key.
+                  keyPath: 'noteid',
                   // If it isn't explicitly set, create a value by auto incrementing.
                   autoIncrement: true,
                   });
@@ -264,7 +265,6 @@ class App extends Component {
 
       handleSaveNote(e, note) {
         var notebody = turndownService.turndown(marked(marked(document.getElementById('notebody').value)));
-        console.log(notebody);
          this.setState((prevState) => {
               const updatedNotes = prevState.allnotes.map((noteitem) => {
                   if (noteitem.noteid === note.noteid) {
@@ -359,8 +359,7 @@ class App extends Component {
         }
       };
 
-      handleCopyNote(e, note) {
-        const notecopy = `## ${note.notetitle}\n${note.notebody}`;
+      handleCopyNote(e, content) {
         var textArea = document.createElement("textarea");
         // Place in top-left corner of screen regardless of scroll position.
         textArea.style.position = 'fixed';
@@ -378,8 +377,8 @@ class App extends Component {
         textArea.style.boxShadow = 'none';
         // Avoid flash of white box if rendered for any reason.
         textArea.style.background = 'transparent';
-        textArea.value = notecopy;
-        document.body.appendChild(textArea);
+        textArea.value = content.isArray ? `## ${content.notetitle}\n${content.notebody}` : content
+        document.body.appendChild(textArea); 
         textArea.focus();
         textArea.select();
         try {
@@ -388,6 +387,26 @@ class App extends Component {
             console.log('Oops, unable to copy');
         }
         document.body.removeChild(textArea);
+      }
+
+      handleCopyEvent(e) {
+        e.preventDefault();
+        var html = "";
+        if (typeof window.getSelection != "undefined") {
+            var sel = window.getSelection();
+            if (sel.rangeCount) {
+                var container = document.createElement("div");
+                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (typeof document.selection != "undefined") {
+            if (document.selection.type == "Text") {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        this.handleCopyNote("",turndownService.turndown(html));
       }
 
       handleKeyEvent(event) {
@@ -518,7 +537,8 @@ class App extends Component {
             handleCopyNote={this.handleCopyNote}
           />
           ActivePage = <NoteMain 
-            notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
+          notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}
+          handleCopyEvent={this.handleCopyEvent}
           />
         } 
         if (this.state.activepage === "editnote"){
