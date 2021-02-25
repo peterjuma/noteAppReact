@@ -377,7 +377,7 @@ class App extends Component {
         textArea.style.boxShadow = 'none';
         // Avoid flash of white box if rendered for any reason.
         textArea.style.background = 'transparent';
-        textArea.value = content.isArray ? `## ${content.notetitle}\n${content.notebody}` : content
+        textArea.value = ((typeof content === "object")? `## ${content.notetitle}\n${content.notebody}` : content)
         document.body.appendChild(textArea); 
         textArea.focus();
         textArea.select();
@@ -388,7 +388,7 @@ class App extends Component {
         }
         document.body.removeChild(textArea);
       }
-
+ 
       handleCopyEvent(e) {
         e.preventDefault();
         var html = "";
