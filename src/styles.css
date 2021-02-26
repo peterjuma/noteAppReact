@@ -133,14 +133,16 @@ padding-left: 0;
 .note-list-item {
   height: 60px;
   padding: 10px 20px 0 25px;
-  border: none;
-  border-bottom: 1px solid #dcdcde;
+  /* border: none;
+  border-bottom: 1px solid #dcdcde; */
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   margin: 0 4px;
   cursor: pointer;
   font-size: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 ul, ol {
@@ -150,7 +152,7 @@ ul, ol {
 }
 
 .note-list-item-hover {
-  background: #f6f5f5;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .note-list-item-prev {
@@ -212,6 +214,11 @@ button {
   border: none;
   background-color: #fff;
 }
+
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+  font-weight: 400;
+  }
 
 .main {
   padding: 20px 200px 50px;
