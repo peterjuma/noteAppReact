@@ -220,11 +220,12 @@ class App extends Component {
 
       handleCancel = (e, note) => {
         if(note.action === "updatenote") {
-          document.getElementById(note.noteid).click();
-        } else {
-          document.querySelectorAll(".note-list-item")[0].click();
+          return document.getElementById(note.noteid).click();
+        }  
+        if(document.querySelectorAll(".note-list-item").length > 0){
+          return document.querySelectorAll(".note-list-item")[0].click();
         }
-        
+        return this.handleClickHomeBtn()   
       }
       handleEditNote = (e, note) => {
         this.setState(
@@ -519,6 +520,7 @@ class App extends Component {
       }
       DisplayList.length > 0 && DisplayList[0].click();
     }
+
     render() {
         const noteListItems = (this.state.allnotes).map((note) => (
           <NoteList key={note.noteid} note={note} 
@@ -552,6 +554,7 @@ class App extends Component {
             handleKeyEvent={this.handleKeyEvent} 
             processInput={this.processInput} 
             handleCancel={this.handleCancel}
+            handleImageUpload={this.handleImageUpload}
           />
         }   
 

@@ -40,6 +40,7 @@ function NoteEditor(props) {
                     onKeyDown={((e) => props.handleKeyEvent(e))} 
                 />
             </div> 
+            <div className="right-bottom-bar"></div>
         </div>
     )
 }
