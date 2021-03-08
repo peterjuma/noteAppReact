@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/noteApp/static/css/main.746248a6.chunk.css",
-    "main.js": "/noteApp/static/js/main.915cb674.chunk.js",
-    "main.js.map": "/noteApp/static/js/main.915cb674.chunk.js.map",
+    "main.css": "/noteApp/static/css/main.539a7c09.chunk.css",
+    "main.js": "/noteApp/static/js/main.344854f1.chunk.js",
+    "main.js.map": "/noteApp/static/js/main.344854f1.chunk.js.map",
     "runtime-main.js": "/noteApp/static/js/runtime-main.fedf5a3b.js",
     "runtime-main.js.map": "/noteApp/static/js/runtime-main.fedf5a3b.js.map",
     "static/js/2.176db0cf.chunk.js": "/noteApp/static/js/2.176db0cf.chunk.js",
     "static/js/2.176db0cf.chunk.js.map": "/noteApp/static/js/2.176db0cf.chunk.js.map",
     "index.html": "/noteApp/index.html",
-    "static/css/main.746248a6.chunk.css.map": "/noteApp/static/css/main.746248a6.chunk.css.map",
+    "static/css/main.539a7c09.chunk.css.map": "/noteApp/static/css/main.539a7c09.chunk.css.map",
     "static/js/2.176db0cf.chunk.js.LICENSE.txt": "/noteApp/static/js/2.176db0cf.chunk.js.LICENSE.txt",
     "static/media/README.7753bf41.md": "/noteApp/static/media/README.7753bf41.md"
   },
   "entrypoints": [
     "static/js/runtime-main.fedf5a3b.js",
     "static/js/2.176db0cf.chunk.js",
-    "static/css/main.746248a6.chunk.css",
-    "static/js/main.915cb674.chunk.js"
+    "static/css/main.539a7c09.chunk.css",
+    "static/js/main.344854f1.chunk.js"
   ]
 }
