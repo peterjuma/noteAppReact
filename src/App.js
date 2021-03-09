@@ -45,6 +45,7 @@ class App extends Component {
         this.handleEditNote = this.handleEditNote.bind(this)
         this.handleSaveNote = this.handleSaveNote.bind(this)
         this.handleDeleteNote = this.handleDeleteNote.bind(this)
+        this.handleDownloadNote = this.handleDownloadNote.bind(this)
         this.handlePaste = this.handlePaste.bind(this)
         this.processInput = this.processInput.bind(this)
         this.handleKeyEvent = this.handleKeyEvent.bind(this)
@@ -521,6 +522,10 @@ class App extends Component {
       DisplayList.length > 0 && DisplayList[0].click();
     }
 
+    handleDownloadNote(e) {
+      console.log("Downloaded note");
+    }
+
     render() {
         const noteListItems = (this.state.allnotes).map((note) => (
           <NoteList key={note.noteid} note={note} 
@@ -537,6 +542,7 @@ class App extends Component {
             handleEditNote={this.handleEditNote} 
             handleDeleteNote={this.handleDeleteNote}
             handleCopyNote={this.handleCopyNote}
+            handleDownloadNote = {this.handleDownloadNote}
           />
           ActivePage = <NoteMain 
           notesData={{noteid: this.state.noteid, notetitle: this.state.notetitle, notebody: this.state.notebody, action:this.state.action}}

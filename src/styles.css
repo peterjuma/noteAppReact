@@ -92,9 +92,7 @@ padding-left: 0;
 
 /* Navbar icons - right  */
 .nav-right-icon {
-  padding: 7px;
-  padding-left: 10em;
-  padding-right: 10em;
+  padding: 7px 1em;
 }
 
 /* Search Bar */
@@ -177,9 +175,13 @@ ul, ol {
   line-height: 44px; 
   border-top: 1px solid #dcdcde;;  
   margin: 0; 
-  padding: 0 24px 0 20px; 
+  padding: 0 24px 0 24px; 
   font-size: 14px; 
   bottom: 0;
+  }
+
+  .right-bottom-bar {
+    padding: 6px 24px 0 24px; 
   }
 
 .sort-order-selector option {
@@ -212,6 +214,25 @@ input[type="search"]::-webkit-search-cancel-button {
   cursor: pointer;
   margin: 2px;
   color: #777;
+}
+
+.btn-save-cancel {
+  /* border: none; */
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+  margin: 2px;
+  color: #333;
+  font-weight: 500;
+  /* border: 1px solid #dcdcde; */
+  padding: 8px;
+  font-family: "Font Awesome 5 Free", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.btn-save-cancel:hover{
+  color: #24292e;
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
 }
 
 button {
@@ -250,7 +271,7 @@ font-weight: 400;
   font-weight: 500;
   }
 
-  .main {
+.main {
     padding: 20px 200px 50px;
     overflow-y: scroll;
     height: calc(100% - 100px);
@@ -285,7 +306,7 @@ font-weight: 400;
 
 #notetitle {
   height: 50px;
-  padding: 16px 190px;
+  padding: 16px 50px;
   width: 100%;
   border: none;
   border-bottom: 1px solid #dcdcde;
@@ -295,8 +316,8 @@ font-weight: 400;
 
 /* Editor Textarea */
 textarea {
-  padding-left: 200px;
-  padding-right: 190px;
+  padding-left: 50px;
+  padding-right: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
   font-size: 16px;
@@ -323,16 +344,17 @@ textarea {
 .md-editor-tools {
   border: none;
   display: flex;
-  padding: 16.5px 175px;
+  padding: 16.5px 50px;
 }
 
-.saveCancelBtn {
+.saveCancelBar {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content:  space-between;
   padding-right: 30px;
   padding-left: 30px;
 }
+
 
 .md-buttons {
   border: none;
