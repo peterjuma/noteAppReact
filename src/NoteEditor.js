@@ -38,8 +38,8 @@ function NoteEditor(props) {
             </div> 
             <div className="right-bottom-bar">
                 <div className="saveCancelBar"> 
-                        <i className="far fa-save btn-save-cancel" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}> Save</i>
-                        <i className="far fa-window-close btn-save-cancel" onClick={((e) => props.handleCancel(e, note))}> Cancel</i>
+                        <i className="far fa-save btn-save-cancel fa-2x" onClick={((e) => props.handleSaveNote(e, note))} data-action={note.action}></i>
+                        <i className="far fa-window-close btn-save-cancel fa-2x" onClick={((e) => props.handleCancel(e, note))}></i>
                 </div>
             </div>
         </div>
