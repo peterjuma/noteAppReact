@@ -523,7 +523,20 @@ class App extends Component {
     }
 
     handleDownloadNote(e) {
-      console.log("Downloaded note");
+      const html = document.getElementById("notebody-view").innerHTML;
+      const data = turndownService.turndown(marked(html));
+      const title = turndownService.turndown(marked(document.getElementById("notetitle-view").innerHTML)).replace(/ /g,"_");
+      const fileName = `${title || "note"}.md`
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      var blob = new Blob([data], { type: "text/plain;charset=utf-8" }),
+          url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      e.preventDefault();
     }
 
     render() {
